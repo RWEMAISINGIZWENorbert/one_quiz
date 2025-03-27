@@ -13,10 +13,22 @@ class _QuizHeaderState extends State<QuizHeader> {
   @override
   Widget build(BuildContext context) {
     List<QuizModel> quizData = QuizModel.initQuiz();
-      int currentInddex = 0;
+     int currentInddex = 0;
 
     return Column(
           children: [
+             Container(
+              margin: EdgeInsets.only(right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Text>[
+                  Text(
+                    '$currentInddex out of ${quizData.length}',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  )
+                ],
+              ),
+            ),
             SizedBox(
               height: 20,
               child: ListView.builder(
@@ -34,18 +46,27 @@ class _QuizHeaderState extends State<QuizHeader> {
                 }
                 ),
             ),
+            const SizedBox(height: 8),
             Container(
               margin: EdgeInsets.only(right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: <Text>[
-                  Text(
-                    '$currentInddex out of ${quizData.length}',
-                    style: Theme.of(context).textTheme.labelSmall,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 9),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: const Color(0xFF5EE61F),
+                    ),
+                    child: Text(
+                      '3:00',
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.white),
+                    ),
                   )
                 ],
               ),
-            )
+            ),
           ],
         );
   }
