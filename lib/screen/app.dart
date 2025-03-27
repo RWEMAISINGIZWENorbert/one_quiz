@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:one_quiz/components/quiz_header.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -20,9 +21,12 @@ class _AppState extends State<App> {
               'Math quiz', 
               style: Theme.of(context).textTheme.titleMedium
               ),
-          )
+          ),
+          const SizedBox(height: 40,),
+          QuizHeader()
         ],
       ),
     );
   }
+
 }
