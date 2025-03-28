@@ -1,4 +1,3 @@
-
 import 'package:easy_radio/easy_radio.dart';
 import 'package:flutter/material.dart';
 import 'package:one_quiz/model/quiz_model.dart';
@@ -13,6 +12,7 @@ class AnswerOptions extends StatefulWidget {
 
 class _AnswerOptionsState extends State<AnswerOptions> {
   bool selected = false;
+   int? _groupValue =  -1;
   @override
   Widget build(BuildContext context) {
       List<QuizModel> quizData = QuizModel.initQuiz();
@@ -55,19 +55,20 @@ class _AnswerOptionsState extends State<AnswerOptions> {
       itemCount: quizData[widget.currentIndex].options.length,
       itemBuilder: (context, index){
          // ignore: no_leading_underscores_for_local_identifiers
-         int? _groupValue =  0;
+
          return ListTile(
-          leading: EasyRadio(
-            value: 0, 
+          leading: EasyRadio<int>(
+            value: index, 
             groupValue: _groupValue, 
-            toggleable: false,
+            // toggleable: true,
             dotColor: Color.fromARGB(255, 57, 124, 26) ,
             activeBorderColor: Color.fromARGB(255, 57, 124, 26),
-            inactiveBorderColor: Theme.of(context).hoverColor,
+            inactiveBorderColor: Theme.of(context).hintColor,
             dotStyle: DotStyle.check(),
-            onChanged: (value){
+            onChanged: (index){
               setState(() {
-                _groupValue = _groupValue == index ? null: index;
+                // _groupValue = _groupValue == index ? null: index;
+                _groupValue = index;
               });
             }
             ),

@@ -7,6 +7,7 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   cardColor: Colors.grey[300],
   focusColor: Colors.grey[500],
+  hintColor: Colors.black12,
   textTheme: TextTheme(
     titleMedium: TextStyle(
       color: Colors.black87,
