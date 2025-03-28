@@ -26,7 +26,35 @@ class QuizModel {
       quizData.add(
         QuizModel(
           id: id,
-          questionName: 'What is 1 + 1',
+          questionName: 'What is 1 + 2',
+          options: ['1','2', '3', '4', '5'],
+          answerINdex: 1 
+          ));
+      quizData.add(
+        QuizModel(
+          id: id,
+          questionName: 'What is 1 + 3',
+          options: ['1','2', '3', '4', '5'],
+          answerINdex: 1 
+          ));
+      quizData.add(
+        QuizModel(
+          id: id,
+          questionName: 'What is 1 + 4',
+          options: ['1','2', '3', '4', '5'],
+          answerINdex: 1 
+          ));
+      quizData.add(
+        QuizModel(
+          id: id,
+          questionName: 'What is 1 + 5',
+          options: ['1','2', '3', '4', '5'],
+          answerINdex: 1 
+          ));
+      quizData.add(
+        QuizModel(
+          id: id,
+          questionName: 'What is 1 + 6',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
@@ -131,42 +159,14 @@ class QuizModel {
       quizData.add(
         QuizModel(
           id: id,
-          questionName: 'What is 1 + 1',
+          questionName: 'Beforet the last question What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
           id: id,
-          questionName: 'What is 1 + 1',
-          options: ['1','2', '3', '4', '5'],
-          answerINdex: 1 
-          ));
-      quizData.add(
-        QuizModel(
-          id: id,
-          questionName: 'What is 1 + 1',
-          options: ['1','2', '3', '4', '5'],
-          answerINdex: 1 
-          ));
-      quizData.add(
-        QuizModel(
-          id: id,
-          questionName: 'What is 1 + 1',
-          options: ['1','2', '3', '4', '5'],
-          answerINdex: 1 
-          ));
-      quizData.add(
-        QuizModel(
-          id: id,
-          questionName: 'What is 1 + 1',
-          options: ['1','2', '3', '4', '5'],
-          answerINdex: 1 
-          ));
-      quizData.add(
-        QuizModel(
-          id: id,
-          questionName: 'What is 1 + 1',
+          questionName: 'last quiseion What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));

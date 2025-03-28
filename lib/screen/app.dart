@@ -13,11 +13,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-   List<QuizModel> quizData = QuizModel.initQuiz();
    int currentIndex = 0;
+   int actualIndex = 1;
+   List<QuizModel> quizData = QuizModel.initQuiz();
 
   @override
   Widget build(BuildContext context) {
+    int lastIndex = quizData.length - 1;
     return  Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +31,10 @@ class _AppState extends State<App> {
               ),
           ),
           const SizedBox(height: 40),
-          QuizHeader(),
+          QuizHeader(
+            currentIndex: currentIndex,
+            actualIndex: actualIndex
+            ),
           const SizedBox(height: 50),
           Column(
             children: [
@@ -59,22 +64,26 @@ class _AppState extends State<App> {
               horizontal: 40
             ),
             child: ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+              // int lastIndex = quizData.length - 1; 
+               setState(() {
+                  if(currentIndex < lastIndex){
+                    currentIndex +=1;
+                    actualIndex += 1;
+                  }
+              });
+              }, 
               style: ButtonStyle(
                 backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
               ),
               child: Container(
                 alignment: Alignment.center,
-                child: InkWell(
-                  onTap: (){
-                    currentIndex += 1;
-                  },
-                  child: Text('Next', style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white
-                  ),),
-                ),
+                child: Text( 
+                  currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white
+                ),),
                 )
               ),
           ),

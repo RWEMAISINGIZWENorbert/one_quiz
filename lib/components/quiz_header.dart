@@ -2,18 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:one_quiz/model/quiz_model.dart';
 
-class QuizHeader extends StatefulWidget {
-  const QuizHeader({super.key});
+class QuizHeader extends StatelessWidget {
+  final int currentIndex;
+  final int actualIndex;
+  const QuizHeader({super.key, required this.currentIndex, required this.actualIndex});
 
-  @override
-  State<QuizHeader> createState() => _QuizHeaderState();
-}
-
-class _QuizHeaderState extends State<QuizHeader> {
   @override
   Widget build(BuildContext context) {
     List<QuizModel> quizData = QuizModel.initQuiz();
-     int currentInddex = 0;
+    print( 'Currrent index $currentIndex');
+    print( 'ACtual index $actualIndex');
 
     return Column(
           children: [
@@ -23,7 +21,7 @@ class _QuizHeaderState extends State<QuizHeader> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Text>[
                   Text(
-                    '$currentInddex out of ${quizData.length}',
+                    '$actualIndex out of ${quizData.length}',
                     style: Theme.of(context).textTheme.labelSmall,
                   )
                 ],
