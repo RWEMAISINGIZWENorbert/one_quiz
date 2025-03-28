@@ -5,6 +5,7 @@ import 'package:one_quiz/components/answer_options.dart';
 import 'package:one_quiz/components/quiz_header.dart';
 import 'package:one_quiz/model/quiz_model.dart';
 import 'package:one_quiz/screen/result.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -17,6 +18,8 @@ class _AppState extends State<App> {
    int currentIndex = 0;
    int actualIndex = 1;
    bool selected =  false;
+   String selectedAnswer = '';
+   String questionId = '';
    List<QuizModel> quizData = QuizModel.initQuiz();
 
   //  @override
@@ -74,6 +77,8 @@ class _AppState extends State<App> {
               const SizedBox(height: 15),
               AnswerOptions(
                 currentIndex: currentIndex,
+                selectedAnswer: selectedAnswer,
+                questionId: '',
                 ),
             ],
           ),
@@ -83,12 +88,13 @@ class _AppState extends State<App> {
               horizontal: 40
             ),
             child: ElevatedButton(
-              onPressed: (){
+              onPressed: () async {
               // int lastIndex = quizData.length - 1; 
                setState(() {
                   if(currentIndex < lastIndex){
                     currentIndex += 1;
                     actualIndex += 1;
+                    print(quizData.map((e) => e.id));
                   }
               });
                 if(currentIndex == lastIndex){
@@ -98,6 +104,8 @@ class _AppState extends State<App> {
                       )
                       );
                   }
+                  final SharedPreferences prfs = await SharedPreferences.getInstance(); 
+                  await prfs.setString('question id ${quizData[lastIndex]}', selectedAnswer); 
               }, 
               style: ButtonStyle(
                 backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
@@ -109,7 +117,8 @@ class _AppState extends State<App> {
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: Colors.white
-                ),),
+                ),
+                ),
                 )
               ),
           ),

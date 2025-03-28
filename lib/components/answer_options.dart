@@ -4,7 +4,14 @@ import 'package:one_quiz/model/quiz_model.dart';
 
 class AnswerOptions extends StatefulWidget {
   final int currentIndex;
-  const AnswerOptions({super.key, required this.currentIndex});
+  final String selectedAnswer;
+  final String questionId;
+  const AnswerOptions({
+    super.key, 
+    required this.currentIndex, 
+    required this.selectedAnswer,
+    required this.questionId
+    });
 
   @override
   State<AnswerOptions> createState() => _AnswerOptionsState();
@@ -13,6 +20,15 @@ class AnswerOptions extends StatefulWidget {
 class _AnswerOptionsState extends State<AnswerOptions> {
   bool selected = false;
    int? _groupValue =  -1;
+   late String selectedAnswer;
+   late String questionId;
+  @override
+  void initState() {
+    super.initState();
+    selectedAnswer = widget.selectedAnswer;
+    questionId = widget.questionId;
+  }
+
   @override
   Widget build(BuildContext context) {
       List<QuizModel> quizData = QuizModel.initQuiz();
@@ -55,9 +71,8 @@ class _AnswerOptionsState extends State<AnswerOptions> {
       itemCount: quizData[widget.currentIndex].options.length,
       itemBuilder: (context, index){
          // ignore: no_leading_underscores_for_local_identifiers
-
          return ListTile(
-          leading: EasyRadio<int>(
+          leading: EasyRadio(
             value: index, 
             groupValue: _groupValue, 
             // toggleable: true,
@@ -67,8 +82,8 @@ class _AnswerOptionsState extends State<AnswerOptions> {
             dotStyle: DotStyle.check(),
             onChanged: (index){
               setState(() {
-                // _groupValue = _groupValue == index ? null: index;
                 _groupValue = index;
+                 selectedAnswer = quizData[widget.currentIndex].options[index!.toInt()];
               });
             }
             ),

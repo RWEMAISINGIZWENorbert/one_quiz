@@ -3,7 +3,10 @@ import 'package:one_quiz/screen/app.dart';
 import 'package:one_quiz/theme/dark_theme.dart';
 import 'package:one_quiz/theme/light_theme.dart';
 
-void main() {
+void main() async {
+   
+   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
