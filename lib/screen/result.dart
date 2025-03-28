@@ -26,7 +26,7 @@ class MyResult extends StatelessWidget {
                SizedBox(height: screenWidth / 2,),
               CircularPercentIndicator(
                 radius:  100,
-                lineWidth: 2.0,
+                lineWidth: 4.0,
                 percent: ((4 * 100) / 5) / 100,
                 center:  Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

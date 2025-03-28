@@ -90,30 +90,27 @@ class _AppState extends State<App> {
                     actualIndex += 1;
                   }
               });
-              }, 
-              style: ButtonStyle(
-                backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
-              ),
-              child: InkWell(
-                onTap: (){
-                  if(currentIndex != lastIndex){
+
+                if(currentIndex == lastIndex){
                     Navigator.push(
                       context, 
                       MaterialPageRoute(builder: (context) => MyResult()
                       )
                       );
                   }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text( 
-                    currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white
-                  ),),
-                  ),
-              )
+              }, 
+              style: ButtonStyle(
+                backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text( 
+                  currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white
+                ),),
+                )
               ),
           ),
             const Spacer()   
