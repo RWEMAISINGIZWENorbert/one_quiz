@@ -15,7 +15,13 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
    int currentIndex = 0;
    int actualIndex = 1;
+   bool selected =  false;
    List<QuizModel> quizData = QuizModel.initQuiz();
+
+  //  @override
+  // void setState(void hy) {
+  //   selected = !selected;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +30,20 @@ class _AppState extends State<App> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text(
-              'Math quiz', 
-              style: Theme.of(context).textTheme.titleMedium
+          Row(
+            children: [
+              IconButton(
+                 onPressed: (){},
+                 icon: Icon(Icons.arrow_back_ios)
+                ),
+              const SizedBox(width: 72),
+              Center(
+                child: Text(
+                  'Math quiz', 
+                  style: Theme.of(context).textTheme.titleMedium
+                  ),
               ),
+            ],
           ),
           const SizedBox(height: 40),
           QuizHeader(
@@ -55,7 +70,9 @@ class _AppState extends State<App> {
                 style: Theme.of(context).textTheme.labelSmall,
                 ),
               const SizedBox(height: 15),
-              AnswerOptions(currentIndex: currentIndex),
+              AnswerOptions(
+                currentIndex: currentIndex,
+                ),
             ],
           ),
           const SizedBox(height: 5),
