@@ -33,5 +33,9 @@ ThemeData lightTheme = ThemeData(
       decoration: TextDecoration.none,
       letterSpacing: 0.9
     ),
+  ),
+  buttonTheme: ButtonThemeData(
+    buttonColor: const Color(0xFF5EE61F),
+    focusColor: const Color(0xFF5EE61F)
   )
 );

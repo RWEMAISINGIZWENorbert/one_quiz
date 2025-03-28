@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:one_quiz/components/answer_options.dart';
 import 'package:one_quiz/components/quiz_header.dart';
 import 'package:one_quiz/model/quiz_model.dart';
@@ -51,7 +52,33 @@ class _AppState extends State<App> {
               const SizedBox(height: 15),
               AnswerOptions(),
             ],
-          )   
+          ),
+          const SizedBox(height: 5),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 40
+            ),
+            child: ElevatedButton(
+              onPressed: (){}, 
+              style: ButtonStyle(
+                backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                child: InkWell(
+                  onTap: (){
+                    currentIndex += 1;
+                  },
+                  child: Text('Next', style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white
+                  ),),
+                ),
+                )
+              ),
+          ),
+            const Spacer()   
         ],
       ),
     );
