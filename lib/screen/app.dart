@@ -31,6 +31,7 @@ class _AppState extends State<App> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 44,),
           Row(
             children: [
               IconButton(
@@ -90,7 +91,6 @@ class _AppState extends State<App> {
                     actualIndex += 1;
                   }
               });
-
                 if(currentIndex == lastIndex){
                     Navigator.push(
                       context, 
