@@ -26,5 +26,12 @@ ThemeData lightTheme = ThemeData(
       decoration: TextDecoration.none,
       letterSpacing: 0.9
     ),
+    labelLarge: GoogleFonts.poppins(
+      color: Colors.black87,
+      fontSize: 36,
+      fontWeight: FontWeight.w800,
+      decoration: TextDecoration.none,
+      letterSpacing: 0.9
+    ),
   )
 );

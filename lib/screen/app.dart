@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:one_quiz/components/answer_options.dart';
 import 'package:one_quiz/components/quiz_header.dart';
 import 'package:one_quiz/model/quiz_model.dart';
 
@@ -34,11 +35,23 @@ class _AppState extends State<App> {
               Center(
                 child: Text(
                   quizData[currentIndex].questionName,
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.labelLarge,
                   ),
               )
             ],
-          ),   
+          ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Choose the best answer',
+                style: Theme.of(context).textTheme.labelSmall,
+                ),
+              const SizedBox(height: 15),
+              AnswerOptions(),
+            ],
+          )   
         ],
       ),
     );
