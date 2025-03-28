@@ -34,7 +34,7 @@ class QuizModel {
         QuizModel(
           id: id,
           questionName: 'What is 1 + 3',
-          options: ['1','2', '3', '4', '5'],
+          options: ['trrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr','rirnifrirrurrs;jaiasiosa[saksaksasa]', 'yrrrepr[peeeeeeeeeeeeeeeeeep]', '6477777777ndh', 'tewqoiw'],
           answerINdex: 1 
           ));
       quizData.add(

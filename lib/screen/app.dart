@@ -55,7 +55,7 @@ class _AppState extends State<App> {
                 style: Theme.of(context).textTheme.labelSmall,
                 ),
               const SizedBox(height: 15),
-              AnswerOptions(),
+              AnswerOptions(currentIndex: currentIndex),
             ],
           ),
           const SizedBox(height: 5),
