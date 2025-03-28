@@ -81,7 +81,7 @@ class _AppState extends State<App> {
                 child: Text( 
                   currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
                   fontSize: 18,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w400,
                   color: Colors.white
                 ),),
                 )

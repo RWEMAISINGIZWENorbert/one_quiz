@@ -10,8 +10,7 @@ class QuizHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<QuizModel> quizData = QuizModel.initQuiz();
-    print( 'Currrent index $currentIndex');
-    print( 'ACtual index $actualIndex');
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Column(
           children: [
@@ -21,7 +20,7 @@ class QuizHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Text>[
                   Text(
-                    '$actualIndex out of ${quizData.length}',
+                    '$actualIndex of ${quizData.length}',
                     style: Theme.of(context).textTheme.labelSmall,
                   )
                 ],
@@ -35,10 +34,10 @@ class QuizHeader extends StatelessWidget {
                 itemBuilder: (context, index){
                   return Container(
                   margin: EdgeInsets.symmetric(horizontal: 5),  
-                  width: 100,
+                  width: screenWidth / quizData.length,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Theme.of(context).cardColor,
+                    color: currentIndex == index ? Colors.blue : Theme.of(context).cardColor,
                   ),
                   );
                 }
