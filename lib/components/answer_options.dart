@@ -4,7 +4,6 @@ import 'package:one_quiz/model/quiz_model.dart';
 
 class AnswerOptions extends StatefulWidget {
   final int currentIndex;
-  // final bool selected;
   const AnswerOptions({super.key, required this.currentIndex});
 
   @override

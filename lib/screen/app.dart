@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:one_quiz/components/answer_options.dart';
 import 'package:one_quiz/components/quiz_header.dart';
 import 'package:one_quiz/model/quiz_model.dart';
+import 'package:one_quiz/screen/result.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -85,7 +86,7 @@ class _AppState extends State<App> {
               // int lastIndex = quizData.length - 1; 
                setState(() {
                   if(currentIndex < lastIndex){
-                    currentIndex +=1;
+                    currentIndex += 1;
                     actualIndex += 1;
                   }
               });
@@ -93,15 +94,26 @@ class _AppState extends State<App> {
               style: ButtonStyle(
                 backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
               ),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text( 
-                  currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white
-                ),),
-                )
+              child: InkWell(
+                onTap: (){
+                  if(currentIndex != lastIndex){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => MyResult()
+                      )
+                      );
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text( 
+                    currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white
+                  ),),
+                  ),
+              )
               ),
           ),
             const Spacer()   
