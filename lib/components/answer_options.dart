@@ -52,7 +52,7 @@ class _AnswerOptionsState extends State<AnswerOptions> {
       //   },
       // ),
     child: ListView.builder(
-      itemCount: quizData.length,
+      itemCount: quizData[widget.currentIndex].options.length,
       itemBuilder: (context, index){
          // ignore: no_leading_underscores_for_local_identifiers
          int? _groupValue =  0;
@@ -70,6 +70,10 @@ class _AnswerOptionsState extends State<AnswerOptions> {
                 _groupValue = _groupValue == index ? null: index;
               });
             }
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 6),
+              child: Text(quizData[widget.currentIndex].options[index]),
             ),
          );
       }
