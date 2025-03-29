@@ -1,4 +1,4 @@
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 
 class QuizModel {
   final String id;
@@ -14,74 +14,74 @@ class QuizModel {
   });
 
   static List<QuizModel> initQuiz(){
-      var id = Uuid().v4();
+      // var id = Uuid().v4();
       List<QuizModel> quizData = [];
       quizData.add(
         QuizModel(
-          id: id,
+          id: '1',
           questionName: 'What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '2',
           questionName: 'What is 1 + 2',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '3',
           questionName: 'What is 1 + 3',
           options: ['trrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr','rirnifrirrurrs;jaiasiosa[saksaksasa]', 'yrrrepr[peeeeeeeeeeeeeeeeeep]', '6477777777ndh', 'tewqoiw'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '4',
           questionName: 'What is 1 + 4',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '5',
           questionName: 'What is 1 + 5',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '6',
           questionName: 'What is 1 + 6',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '7',
           questionName: 'What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '8',
           questionName: 'What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '9',
           questionName: 'What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
           ));
       quizData.add(
         QuizModel(
-          id: id,
+          id: '10',
           questionName: 'What is 1 + 1',
           options: ['1','2', '3', '4', '5'],
           answerINdex: 1 
