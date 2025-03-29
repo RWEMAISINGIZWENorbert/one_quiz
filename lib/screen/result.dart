@@ -22,9 +22,13 @@ class MyResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+        final bool success = score >= totalQuestions / score;
+
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: (){
             Navigator.of(context).pop();
@@ -40,19 +44,19 @@ class MyResult extends StatelessWidget {
                SizedBox(height: screenWidth / 2,),
               CircularPercentIndicator(
                 radius:  100,
-                lineWidth: 4.0,
-                percent: ((4 * 100) / 5) / 100,
+                lineWidth: 5.0,
+                percent: ((score * 100) / totalQuestions) / 100,
                 center:  Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Passed',
+                      success ? "Passed" : "failed",
                       style: Theme.of(context).textTheme.labelSmall,
                       ),
                   ],
                 ),
-                progressColor: Colors.amber[700],
+                progressColor: success ? Colors.green[700] : Colors.red,
                 ),
                 const SizedBox(height: 20),
                 Text('$score out of $totalQuestions', style: Theme.of(context).textTheme.labelSmall,)
