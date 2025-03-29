@@ -26,7 +26,8 @@ class AnswerOptions extends StatefulWidget {
 
 class _AnswerOptionsState extends State<AnswerOptions> {
   // bool selected = false;
-   int? _groupValue =  -1;
+  //  int? _groupValue =  -1;
+    int? _selectedIndex;
   //  late String selectedAnswer;
   //  late String questionId;
   // @override
@@ -35,12 +36,32 @@ class _AnswerOptionsState extends State<AnswerOptions> {
   //   selectedAnswer = widget.selectedAnswer;
   //   questionId = widget.questionId;
   // }
+  //   @override
+  // void initState() {
+  //   super.initState();
+  //   // Initialize with the selected answer if it exists
+  //   final index = widget.currentQuestion.options.indexOf(widget.selectedAnswer);
+  //   _groupValue = index >= 0 ? index : null;
+  // }
+
     @override
   void initState() {
     super.initState();
     // Initialize with the selected answer if it exists
-    final index = widget.currentQuestion.options.indexOf(widget.selectedAnswer);
-    _groupValue = index >= 0 ? index : null;
+    if (widget.selectedAnswer.isNotEmpty) {
+      _selectedIndex = widget.currentQuestion.options.indexOf(widget.selectedAnswer);
+    }
+  }
+
+    @override
+  void didUpdateWidget(AnswerOptions oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update selection when question changes
+    if (widget.selectedAnswer != oldWidget.selectedAnswer) {
+      _selectedIndex = widget.selectedAnswer.isNotEmpty
+          ? widget.currentQuestion.options.indexOf(widget.selectedAnswer)
+          : null;
+    }
   }
 
   @override
@@ -90,25 +111,24 @@ class _AnswerOptionsState extends State<AnswerOptions> {
          return ListTile(
           leading: EasyRadio(
             value: index, 
-            groupValue: _groupValue, 
-            // toggleable: true,
+            groupValue: _selectedIndex, 
             dotColor: Color.fromARGB(255, 57, 124, 26) ,
             activeBorderColor: Color.fromARGB(255, 57, 124, 26),
             inactiveBorderColor: Theme.of(context).hintColor,
             dotStyle: DotStyle.check(),
-            onChanged: (index){
+            onChanged: (value){
               setState(() {
-                _groupValue = index;  
+                _selectedIndex = value;  
                 // if(_groupValue == index){
                 //   selectedAnswer = quizData[widget.currentIndex].options[index];
                 //   // selectedAnswer = quizData[widget.currentIndex].options[index!.toInt()];
                 // }
+                 });
                 widget.onAnswerSelected(
                   widget.currentQuestion.id,
-                  widget.currentQuestion.options[index!],
+                  widget.currentQuestion.options[value!],
                 );
-                // print( 'selcted answer: $selectedAnswer');
-              });
+                // print( 'selcted answer: $selectedAnswer');;
             }
             ),
             title: Padding(

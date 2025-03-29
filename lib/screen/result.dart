@@ -1,10 +1,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:one_quiz/model/quiz_model.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyResult extends StatelessWidget {
-  const MyResult({super.key});
+  final int score;
+  final int totalQuestions;
+  final Map<String, String> selectedAnswers;
+  final Map<String, String> correctAnswers;
+  final List<QuizModel> questions;
+
+  const MyResult({
+    super.key,
+    required this.score,
+    required this.totalQuestions,
+    required this.selectedAnswers,
+    required this.correctAnswers,
+    required this.questions,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +55,7 @@ class MyResult extends StatelessWidget {
                 progressColor: Colors.amber[700],
                 ),
                 const SizedBox(height: 20),
-                Text('4 out of 15', style: Theme.of(context).textTheme.labelSmall,)
+                Text('$score out of $totalQuestions', style: Theme.of(context).textTheme.labelSmall,)
             ],
           ),
         ),

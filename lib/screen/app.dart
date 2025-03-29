@@ -21,6 +21,8 @@ class _AppState extends State<App> {
   //  String selectedAnswer = '';
   //  String questionId = '';
    Map<String, String> answers = {};
+   Map<String, String> selectedAnswers = {};
+   Map<String, String> correctAnswers = {};
    List<QuizModel> quizData = QuizModel.initQuiz();
 
   //  @override
@@ -28,10 +30,50 @@ class _AppState extends State<App> {
   //   selected = !selected;
   // }
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize correct answers map
+    correctAnswers = {
+      for (var question in quizData) question.id: question.correctAnswer
+    };
+  }
+
     void _handleAnswerSelected(String questionId, String answer) {
     setState(() {
-      answers[questionId] = answer;
+      selectedAnswers[questionId] = answer;
     });
+  }
+
+  Future<void> _submitQuiz() async {
+    int score = 0;
+    for (var question in quizData) {
+      if (selectedAnswers[question.id] == question.correctAnswer) {
+        score++;
+      }
+    }
+    
+    // Save results to shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('last_score', score);
+    await prefs.setInt('total_questions', quizData.length);
+    
+    // Save each answer individually
+    for (var entry in selectedAnswers.entries) {
+      await prefs.setString('answer_${entry.key}', entry.value);
+    }
+
+     Navigator.push(context,
+      MaterialPageRoute(
+        builder: (context) => MyResult(
+          score: score,
+          totalQuestions: quizData.length,
+          selectedAnswers: selectedAnswers,
+          correctAnswers: correctAnswers,
+          questions: quizData,
+        ),
+      ),
+    );
   }
 
   @override
@@ -89,7 +131,7 @@ class _AppState extends State<App> {
                 // selectedAnswer: selectedAnswer,
                 // questionId: '','
                 currentQuestion: currentQuestion,
-                selectedAnswer: answers[currentQuestion.id] ?? '',
+                selectedAnswer: selectedAnswers[currentQuestion.id] ?? '',
                 onAnswerSelected: _handleAnswerSelected,
                 ),
             ],
@@ -120,7 +162,7 @@ class _AppState extends State<App> {
               //     await prfs.setString('question id $questionId', selectedAnswer).whenComplete(() => print('question $questionId and $selectedAnswer added successfully')); 
               // }, 
                 onPressed: () async {
-                if (answers[currentQuestion.id] == null && currentIndex != lastIndex) {
+                if (selectedAnswers[currentQuestion.id] == null && currentIndex != lastIndex) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Please select an answer'), ),
                   );
@@ -132,19 +174,19 @@ class _AppState extends State<App> {
                     actualIndex += 1;
                   });
                 } else {
-                  final SharedPreferences prefs = await SharedPreferences.getInstance();
-                  // Save all answers
-                  for (var entry in answers.entries) {
-                    await prefs.setString(entry.key, entry.value);
-                    final data = await prefs.getString(entry.key);
-                    print(data);
-                  }
-                  
-                  Navigator.push(
-                    // ignore: use_build_context_synchronously
-                    context, 
-                    MaterialPageRoute(builder: (context) => const MyResult()),
-                  );
+                  // final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  // // Save all answers
+                  // for (var entry in answers.entries) {
+                  //   await prefs.setString(entry.key, entry.value);
+                  //   final data = await prefs.getString(entry.key);
+                  //   print(data);
+                  // }              
+                  // Navigator.push(
+                  //   // ignore: use_build_context_synchronously
+                  //   context, 
+                  //   MaterialPageRoute(builder: (context) => const MyResult()),
+                  // );
+                  await _submitQuiz();
                 }
               }, 
               style: ButtonStyle(
