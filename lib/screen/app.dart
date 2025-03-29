@@ -17,9 +17,10 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
    int currentIndex = 0;
    int actualIndex = 1;
-   bool selected =  false;
-   String selectedAnswer = '';
-   String questionId = '';
+  //  bool selected =  false;
+  //  String selectedAnswer = '';
+  //  String questionId = '';
+   Map<String, String> answers = {};
    List<QuizModel> quizData = QuizModel.initQuiz();
 
   //  @override
@@ -27,9 +28,17 @@ class _AppState extends State<App> {
   //   selected = !selected;
   // }
 
+    void _handleAnswerSelected(String questionId, String answer) {
+    setState(() {
+      answers[questionId] = answer;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     int lastIndex = quizData.length - 1;
+    final currentQuestion = quizData[currentIndex];
+
     return  Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,9 +85,12 @@ class _AppState extends State<App> {
                 ),
               const SizedBox(height: 15),
               AnswerOptions(
-                currentIndex: currentIndex,
-                selectedAnswer: selectedAnswer,
-                questionId: '',
+                // currentIndex: currentIndex,
+                // selectedAnswer: selectedAnswer,
+                // questionId: '','
+                currentQuestion: currentQuestion,
+                selectedAnswer: answers[currentQuestion.id] ?? '',
+                onAnswerSelected: _handleAnswerSelected,
                 ),
             ],
           ),
@@ -88,24 +100,52 @@ class _AppState extends State<App> {
               horizontal: 40
             ),
             child: ElevatedButton(
-              onPressed: () async {
-              // int lastIndex = quizData.length - 1; 
-               setState(() {
-                  if(currentIndex < lastIndex){
+              // onPressed: () async {
+              // // int lastIndex = quizData.length - 1; 
+              //  setState(() {
+              //     if(currentIndex < lastIndex){
+              //       currentIndex += 1;
+              //       actualIndex += 1;
+              //     }
+              //   questionId = questionId;  
+              // });
+              //   if(currentIndex == lastIndex){
+              //       Navigator.push(
+              //         context, 
+              //         MaterialPageRoute(builder: (context) => MyResult()
+              //         )
+              //         );
+              //     }
+              //     final SharedPreferences prfs = await SharedPreferences.getInstance(); 
+              //     await prfs.setString('question id $questionId', selectedAnswer).whenComplete(() => print('question $questionId and $selectedAnswer added successfully')); 
+              // }, 
+                onPressed: () async {
+                if (answers[currentQuestion.id] == null && currentIndex != lastIndex) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please select an answer'), ),
+                  );
+                  return;
+                }
+                if (currentIndex < lastIndex) {
+                  setState(() {
                     currentIndex += 1;
                     actualIndex += 1;
-                    print(quizData.map((e) => e.id));
+                  });
+                } else {
+                  final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  // Save all answers
+                  for (var entry in answers.entries) {
+                    await prefs.setString(entry.key, entry.value);
+                    final data = await prefs.getString(entry.key);
+                    print(data);
                   }
-              });
-                if(currentIndex == lastIndex){
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => MyResult()
-                      )
-                      );
-                  }
-                  final SharedPreferences prfs = await SharedPreferences.getInstance(); 
-                  await prfs.setString('question id ${quizData[lastIndex]}', selectedAnswer); 
+                  
+                  Navigator.push(
+                    // ignore: use_build_context_synchronously
+                    context, 
+                    MaterialPageRoute(builder: (context) => const MyResult()),
+                  );
+                }
               }, 
               style: ButtonStyle(
                 backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))

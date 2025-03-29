@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:one_quiz/model/quiz_model.dart';
 
 class AnswerOptions extends StatefulWidget {
-  final int currentIndex;
+  // final int currentIndex;
+  // final String selectedAnswer;
+  // final String questionId;
+  final QuizModel currentQuestion;
   final String selectedAnswer;
-  final String questionId;
+  final Function(String, String) onAnswerSelected;
+
   const AnswerOptions({
     super.key, 
-    required this.currentIndex, 
+    // required this.currentIndex, 
+    // required this.selectedAnswer,
+    // required this.questionId
+    required this.currentQuestion, 
     required this.selectedAnswer,
-    required this.questionId
+    required this.onAnswerSelected,
     });
 
   @override
@@ -18,20 +25,27 @@ class AnswerOptions extends StatefulWidget {
 }
 
 class _AnswerOptionsState extends State<AnswerOptions> {
-  bool selected = false;
+  // bool selected = false;
    int? _groupValue =  -1;
-   late String selectedAnswer;
-   late String questionId;
-  @override
+  //  late String selectedAnswer;
+  //  late String questionId;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   selectedAnswer = widget.selectedAnswer;
+  //   questionId = widget.questionId;
+  // }
+    @override
   void initState() {
     super.initState();
-    selectedAnswer = widget.selectedAnswer;
-    questionId = widget.questionId;
+    // Initialize with the selected answer if it exists
+    final index = widget.currentQuestion.options.indexOf(widget.selectedAnswer);
+    _groupValue = index >= 0 ? index : null;
   }
 
   @override
   Widget build(BuildContext context) {
-      List<QuizModel> quizData = QuizModel.initQuiz();
+      // List<QuizModel> quizData = QuizModel.initQuiz();
     return SizedBox(
       height: 400,
       // child: GridView.builder(
@@ -68,8 +82,10 @@ class _AnswerOptionsState extends State<AnswerOptions> {
       //   },
       // ),
     child: ListView.builder(
-      itemCount: quizData[widget.currentIndex].options.length,
+      // itemCount: quizData[widget.currentIndex].options.length,
+      itemCount: widget.currentQuestion.options.length,
       itemBuilder: (context, index){
+        // questionId = quizData[widget.currentIndex].id;
          // ignore: no_leading_underscores_for_local_identifiers
          return ListTile(
           leading: EasyRadio(
@@ -82,14 +98,23 @@ class _AnswerOptionsState extends State<AnswerOptions> {
             dotStyle: DotStyle.check(),
             onChanged: (index){
               setState(() {
-                _groupValue = index;
-                 selectedAnswer = quizData[widget.currentIndex].options[index!.toInt()];
+                _groupValue = index;  
+                // if(_groupValue == index){
+                //   selectedAnswer = quizData[widget.currentIndex].options[index];
+                //   // selectedAnswer = quizData[widget.currentIndex].options[index!.toInt()];
+                // }
+                widget.onAnswerSelected(
+                  widget.currentQuestion.id,
+                  widget.currentQuestion.options[index!],
+                );
+                // print( 'selcted answer: $selectedAnswer');
               });
             }
             ),
             title: Padding(
               padding: const EdgeInsets.only(left: 10, right: 6),
-              child: Text(quizData[widget.currentIndex].options[index]),
+              // child: Text(quizData[widget.currentIndex].options[index]),
+              child: Text(widget.currentQuestion.options[index]),
             ),
          );
       }
