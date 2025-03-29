@@ -20,7 +20,7 @@
     'completedAt': completedAt.toIso8601String()
   };
 
-  factory QuizResult.fromJsn(Map<String, dynamic> json) => 
+  factory QuizResult.fromJosn(Map<String, dynamic> json) => 
      QuizResult(
        quizId: json['quizId'],
        quizName: json['quizName'],
