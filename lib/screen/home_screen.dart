@@ -9,10 +9,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double totalBalance = 2000;
+
   @override
   Widget build(BuildContext context) {
       TextEditingController depositMoneyController = TextEditingController();
       TextEditingController withdrawMoneyController = TextEditingController();
+  //     double depositedMoney  = double.parse(depositMoneyController.text);
+  //  void _depositMoney(){
+  //   setState(() {
+  //     totalBalance += depositedMoney;
+  //   });
+  //  }
     return Scaffold(
       body: Center(
         child: Column(
