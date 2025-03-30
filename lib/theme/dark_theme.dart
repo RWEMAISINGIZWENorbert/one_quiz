@@ -7,6 +7,7 @@ ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.black,
   cardColor: Colors.grey[900],
+  hintColor: Colors.grey[200],
   textTheme: TextTheme(
     titleMedium: TextStyle(
       color: Colors.white,

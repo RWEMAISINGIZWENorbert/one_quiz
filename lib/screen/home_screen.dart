@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  double totalBalance = 2000;
+  @override
   Widget build(BuildContext context) {
-      int totalBalance = 2000;
+      TextEditingController depositMoneyController = TextEditingController();
+      TextEditingController withdrawMoneyController = TextEditingController();
     return Scaffold(
       body: Center(
         child: Column(
@@ -17,29 +24,14 @@ class HomeScreen extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: (){
-                    showModalBottomSheet(
-                      context: context, 
-                      builder: (context){
-                        return SizedBox(
-                          height: 700,
-                          child: Container(
-                            color: Theme.of(context).cardColor,
-                            child: Container(
-                              height: 24,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(8)
-                              ),
-                            ),
-                          )
-                          );
-                      }
-                      );
+                    deposit_money_model(context, depositMoneyController);
                   }, 
                   child: Text('Deposit')
                   ),
                 TextButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    withdraw_money_model(context, withdrawMoneyController);
+                  }, 
                   child: Text('Withdraw')
                   ),
               ],
@@ -50,5 +42,136 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<dynamic> deposit_money_model(BuildContext context, TextEditingController depositMoneyController) {
+    return showModalBottomSheet(
+                 context: context, 
+                    builder: (context){
+                      return SizedBox(
+                        height: 700,
+                        child: Container(
+                          color: Theme.of(context).cardColor,
+                          // color: Theme.of(context).hintColor,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 22, horizontal: 26),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Enter the money'),
+                                    const SizedBox(height: 8,),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 12),
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).scaffoldBackgroundColor,
+                                        borderRadius: BorderRadius.circular(8)
+                                      ),
+                                      child: TextField(
+                                        controller: depositMoneyController,
+                                        style: Theme.of(context).textTheme.labelSmall!.copyWith(fontSize: 16, fontWeight: FontWeight.w200),
+                                        keyboardType: TextInputType.numberWithOptions(),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          errorText: null,
+                                          // helperStyle: 
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 40,),
+                              ElevatedButton(
+                                onPressed: (){
+                                  print('Before $totalBalance');
+                                 double depositedMoney = double.parse(depositMoneyController.text);
+                                  setState(() {
+                                     totalBalance += depositedMoney;
+                                  });
+                                  print('After $totalBalance');
+                                  Navigator.pop(context);
+                                }, 
+                                child: Text('submit')
+                                )
+                            ],
+                          ),
+                        )
+                        );
+                    }
+                    );
+  }
+
+    Future<dynamic> withdraw_money_model(BuildContext context, TextEditingController withdrawMoneyController) {
+    return showModalBottomSheet(
+                 context: context, 
+                    builder: (context){
+                      return SizedBox(
+                        height: 700,
+                        child: Container(
+                          color: Theme.of(context).cardColor,
+                          // color: Theme.of(context).hintColor,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 22, horizontal: 26),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Enter the money'),
+                                    const SizedBox(height: 8,),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 12),
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).scaffoldBackgroundColor,
+                                        borderRadius: BorderRadius.circular(8)
+                                      ),
+                                      child: TextField(
+                                        controller: withdrawMoneyController,
+                                        style: Theme.of(context).textTheme.labelSmall!.copyWith(fontSize: 16, fontWeight: FontWeight.w200),
+                                        keyboardType: TextInputType.numberWithOptions(),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          errorText: null,
+                                          // helperStyle: 
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 40,),
+                              ElevatedButton(
+                                onPressed: (){
+                                  double withdrawedMoney = double.parse(withdrawMoneyController.text);
+                                  if(withdrawedMoney > totalBalance){
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                       SnackBar(
+                                        content: Text('You have not enough money'),
+                                        backgroundColor: Theme.of(context).cardColor
+                                        ),
+                                    );
+                                    return;
+                                  }
+                                  print('Before $totalBalance');
+                                  setState(() {
+                                     totalBalance -= withdrawedMoney;
+                                  });
+                                  print('After $totalBalance');
+                                  Navigator.pop(context);
+                                }, 
+                                child: Text('submit')
+                                )
+                            ],
+                          ),
+                        )
+                        );
+                    }
+                    );
   }
 }
