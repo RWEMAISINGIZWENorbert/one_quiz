@@ -27,7 +27,7 @@ class _AppState extends State<App> {
    Map<String, String> correctAnswers = {};
    List<QuizModel> quizData = QuizModel.initQuiz();
    Timer? _questionTimer;
-  int _timeRemaining = 10; // 3 seconds per question
+  int _timeRemaining = 1; // 3 seconds per question
   bool _timeExpired = false;
 
   @override
@@ -42,7 +42,7 @@ class _AppState extends State<App> {
 
      void _startTimer() {
     _timeExpired = false;
-    _timeRemaining = 10;
+    _timeRemaining = 9;
     _questionTimer?.cancel(); // Cancel any existing timer
     
     _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -156,7 +156,7 @@ class _AppState extends State<App> {
           QuizHeader(
             currentIndex: currentIndex,
             actualIndex: actualIndex,
-            // timeRemaining: _timeRemaining
+            timeRemaining: _timeRemaining
             ),
           const SizedBox(height: 50),
           Column(

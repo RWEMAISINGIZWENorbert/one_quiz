@@ -5,7 +5,8 @@ import 'package:one_quiz/model/quiz_model.dart';
 class QuizHeader extends StatelessWidget {
   final int currentIndex;
   final int actualIndex;
-  const QuizHeader({super.key, required this.currentIndex, required this.actualIndex});
+  final int timeRemaining;
+  const QuizHeader({super.key, required this.currentIndex, required this.actualIndex, required this.timeRemaining});
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +55,10 @@ class QuizHeader extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 9),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color: const Color(0xFF5EE61F),
+                      color: timeRemaining < 5 ? (Colors.red ) :const Color(0xFF5EE61F),
                     ),
                     child: Text(
-                      '3:00',
+                      '00:0$timeRemaining',
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.white),
                     ),
                   )

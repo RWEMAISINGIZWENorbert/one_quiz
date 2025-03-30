@@ -43,6 +43,7 @@ class MyResult extends StatelessWidget {
             children: <Widget>[
                SizedBox(height: screenWidth / 2,),
               CircularPercentIndicator(
+                backgroundColor: score <= 0 ? (Colors.red[700] ?? Colors.red) : (Theme.of(context).cardColor),
                 radius:  100,
                 lineWidth: 5.0,
                 percent: ((score * 100) / totalQuestions) / 100,
