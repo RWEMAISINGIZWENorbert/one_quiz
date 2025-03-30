@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 40,),
                               ElevatedButton(
-                                onPressed: (){
+                                onPressed: () async {
                                   double withdrawedMoney = double.parse(withdrawMoneyController.text);
                                   if(withdrawedMoney > totalBalance){
                                     Navigator.pop(context);
@@ -184,9 +184,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return;
                                   }
                                   print('Before $totalBalance');
-                                  setState(() {
-                                     totalBalance -= withdrawedMoney;
-                                  });
+                                  // setState(() {
+                                  //    totalBalance -= withdrawedMoney;
+                                  // });
+                                   await _accountService.deductMoney(withdrawedMoney);
+                                   await _loadBalance();
+
                                   print('After $totalBalance');
                                   Navigator.pop(context);
                                 }, 
