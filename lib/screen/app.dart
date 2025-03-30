@@ -66,7 +66,7 @@ class _AppState extends State<App> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Time expired! Moving to next question...'),
-        duration: Duration(seconds: 5),
+        duration: Duration(seconds: 2),
       ),
     );
     

@@ -29,7 +29,7 @@ class QuizStorageService {
     return resultsJson.map((jsonString) {
       try {
         final json = jsonDecode(jsonString);
-        return QuizResult.fromJosn(json);
+        return QuizResult.fromJson(json);
       } catch (e) {
         print('Error parsing quiz result: $e');
         return null;
