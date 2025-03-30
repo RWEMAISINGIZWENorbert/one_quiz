@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:one_quiz/components/answer_options.dart';
@@ -24,11 +26,9 @@ class _AppState extends State<App> {
    Map<String, String> selectedAnswers = {};
    Map<String, String> correctAnswers = {};
    List<QuizModel> quizData = QuizModel.initQuiz();
-
-  //  @override
-  // void setState(void hy) {
-  //   selected = !selected;
-  // }
+   Timer? _questionTimer;
+  int _timeRemaining = 10; // 3 seconds per question
+  bool _timeExpired = false;
 
   @override
   void initState() {
@@ -37,6 +37,57 @@ class _AppState extends State<App> {
     correctAnswers = {
       for (var question in quizData) question.id: question.correctAnswer
     };
+    _startTimer();
+  }
+
+     void _startTimer() {
+    _timeExpired = false;
+    _timeRemaining = 10;
+    _questionTimer?.cancel(); // Cancel any existing timer
+    
+    _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_timeRemaining > 0) {
+          _timeRemaining--;
+        } else {
+          _handleTimeExpired();
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+    void _handleTimeExpired() {
+    setState(() {
+      _timeExpired = true;
+    });
+    
+    // Show failure message
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Time expired! Moving to next question...'),
+        duration: Duration(seconds: 5),
+      ),
+    );
+    
+    // Move to next question after a delay
+    Future.delayed(const Duration(seconds: 1), () {
+      _goToNextQuestion();
+    });
+  }
+
+    void _goToNextQuestion() {
+    _questionTimer?.cancel();
+    
+    if (currentIndex < quizData.length - 1) {
+      setState(() {
+        currentIndex++;
+        actualIndex++;
+        _startTimer(); // Start timer for new question
+      });
+    } else {
+      _submitQuiz();
+    }
   }
 
     void _handleAnswerSelected(String questionId, String answer) {
@@ -104,7 +155,8 @@ class _AppState extends State<App> {
           const SizedBox(height: 40),
           QuizHeader(
             currentIndex: currentIndex,
-            actualIndex: actualIndex
+            actualIndex: actualIndex,
+            // timeRemaining: _timeRemaining
             ),
           const SizedBox(height: 50),
           Column(
@@ -168,26 +220,15 @@ class _AppState extends State<App> {
                   );
                   return;
                 }
-                if (currentIndex < lastIndex) {
-                  setState(() {
-                    currentIndex += 1;
-                    actualIndex += 1;
-                  });
-                } else {
-                  // final SharedPreferences prefs = await SharedPreferences.getInstance();
-                  // // Save all answers
-                  // for (var entry in answers.entries) {
-                  //   await prefs.setString(entry.key, entry.value);
-                  //   final data = await prefs.getString(entry.key);
-                  //   print(data);
-                  // }              
-                  // Navigator.push(
-                  //   // ignore: use_build_context_synchronously
-                  //   context, 
-                  //   MaterialPageRoute(builder: (context) => const MyResult()),
-                  // );
-                  await _submitQuiz();
-                }
+                // if (currentIndex < lastIndex) {
+                //   setState(() {
+                //     currentIndex += 1;
+                //     actualIndex += 1;
+                //   });
+                // } else {
+                //   await _submitQuiz();
+                // }
+                _goToNextQuestion();
               }, 
               style: ButtonStyle(
                 backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
