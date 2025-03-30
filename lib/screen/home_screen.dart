@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_quiz/services/user_account_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,7 +9,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double totalBalance = 2000;
+  final UserAccountService _accountService = UserAccountService();
+  // double totalBalance = 2000;
+  double totalBalance = 0;
+
+  @override
+  void initState(){
+    super.initState();
+     _loadBalance();
+  }
+
+  Future<void> _loadBalance() async{
+    final balance = await _accountService.getBalance();
+    setState(() {
+      totalBalance = balance;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 40,),
                               ElevatedButton(
-                                onPressed: (){
+                                onPressed: () async{
                                   print('Before $totalBalance');
                                  double depositedMoney = double.parse(depositMoneyController.text);
-                                  setState(() {
-                                     totalBalance += depositedMoney;
-                                  });
+                                //   setState(() {
+                                //      totalBalance += depositedMoney;
+                                //   });
+                                   await _accountService.addMoney(depositedMoney);
+                                   await _loadBalance();
                                   print('After $totalBalance');
                                   Navigator.pop(context);
                                 }, 
