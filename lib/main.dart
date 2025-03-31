@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:one_quiz/screen/app.dart';
 import 'package:one_quiz/screen/home_screen.dart';
 import 'package:one_quiz/theme/dark_theme.dart';
 import 'package:one_quiz/theme/light_theme.dart';

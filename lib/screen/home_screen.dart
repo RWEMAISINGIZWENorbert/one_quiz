@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
      _loadBalance();
   }
-
   Future<void> _loadBalance() async{
     final balance = await _accountService.getBalance();
     setState(() {

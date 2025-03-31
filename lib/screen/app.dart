@@ -38,9 +38,9 @@ class _AppState extends State<App> {
 
   Future<void> _loadBalance() async{
     final balance = await _accountService.getBalance();
-    setState(() {
+    // setState(() {
       totalBalance = balance;
-    });
+    // });
   }
 
   @override
@@ -131,11 +131,7 @@ class _AppState extends State<App> {
     if(score > 1){
       // totalBalance += (score * 2);
       await _accountService.addMoney(score* 2);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('You win ${score * 2}, current Balance is $totalBalance')
-      //     )
-      // );
+      await _loadBalance();
     }  
 
      Navigator.push(context,

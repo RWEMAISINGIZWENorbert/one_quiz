@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:one_quiz/model/quiz_model.dart';
-import 'package:one_quiz/services/user_account_services.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyResult extends StatelessWidget {
