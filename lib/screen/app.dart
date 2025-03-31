@@ -7,9 +7,11 @@ import 'package:one_quiz/components/answer_options.dart';
 import 'package:one_quiz/components/quiz_header.dart';
 import 'package:one_quiz/model/quiz_model.dart';
 import 'package:one_quiz/screen/result.dart';
+import 'package:one_quiz/services/user_account_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
+  // final double selectedMoney;
   const App({super.key});
 
   @override
@@ -29,6 +31,17 @@ class _AppState extends State<App> {
    Timer? _questionTimer;
   int _timeRemaining = 1; // 3 seconds per question
   bool _timeExpired = false;
+  
+  // Object? get selectedMoney => selectedMoney;
+    final UserAccountService _accountService = UserAccountService(); 
+    double totalBalance = 0;
+
+  Future<void> _loadBalance() async{
+    final balance = await _accountService.getBalance();
+    setState(() {
+      totalBalance = balance;
+    });
+  }
 
   @override
   void initState() {
@@ -38,6 +51,7 @@ class _AppState extends State<App> {
       for (var question in quizData) question.id: question.correctAnswer
     };
     _startTimer();
+     _loadBalance();
   }
 
      void _startTimer() {
@@ -114,6 +128,15 @@ class _AppState extends State<App> {
       await prefs.setString('answer_${entry.key}', entry.value);
     }
 
+    if(score > 1){
+      totalBalance += (score * 2);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You win ${score * 2}, current Balance is $totalBalance')
+          )
+      );
+    }  
+
      Navigator.push(context,
       MaterialPageRoute(
         builder: (context) => MyResult(
@@ -122,6 +145,7 @@ class _AppState extends State<App> {
           selectedAnswers: selectedAnswers,
           correctAnswers: correctAnswers,
           questions: quizData,
+          totalBalance: totalBalance
         ),
       ),
     );
@@ -131,6 +155,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     int lastIndex = quizData.length - 1;
     final currentQuestion = quizData[currentIndex];
+    // print(selectedMoney);
 
     return  Scaffold(
       body: Column(
@@ -140,7 +165,9 @@ class _AppState extends State<App> {
           Row(
             children: [
               IconButton(
-                 onPressed: (){},
+                 onPressed: (){
+                  Navigator.pop(context);
+                 },
                  icon: Icon(Icons.arrow_back_ios)
                 ),
               const SizedBox(width: 72),

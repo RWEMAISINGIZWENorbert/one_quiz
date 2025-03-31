@@ -10,6 +10,7 @@ class MyResult extends StatelessWidget {
   final Map<String, String> selectedAnswers;
   final Map<String, String> correctAnswers;
   final List<QuizModel> questions;
+  final double totalBalance;
 
   const MyResult({
     super.key,
@@ -18,7 +19,9 @@ class MyResult extends StatelessWidget {
     required this.selectedAnswers,
     required this.correctAnswers,
     required this.questions,
+    required this.totalBalance
     });
+
 
   @override
   Widget build(BuildContext context) {
