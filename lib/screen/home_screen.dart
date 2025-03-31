@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipOval(
                           child: Image.network(
                             'assets/profile.png',
-                             fit: BoxFit.fill,
+                             fit: BoxFit.cover,
                             ),
                         ),
                       ),
@@ -264,8 +264,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: CircleAvatar(
                                     backgroundColor: Colors.white,
                                     child: CircleAvatar(
+                                      backgroundColor: Theme.of(context).cardColor,
                                       child: ClipOval(
-                                        child: Image.network('assets/rwanda.png'),
+                                        child: Image.network(
+                                          'assets/rwanda.png',
+                                          fit: BoxFit.cover,
+                                          ),
+                            
                                         ),
                                     ),
                                   ),
@@ -314,10 +319,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                           ),
                       ),
+                      const SizedBox(height: 18),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Text('deposit'),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Text('withdraw'),
+                          ),
                         ],
                       )
                     ],
