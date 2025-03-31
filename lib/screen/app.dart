@@ -46,6 +46,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    
     // Initialize correct answers map
     correctAnswers = {
       for (var question in quizData) question.id: question.correctAnswer

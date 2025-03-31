@@ -353,14 +353,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 12,),
                         Container(
-                          height: screenHeight / 5.5,
+                          height: screenHeight / 4,
                           child: ListView.builder(
                             itemCount: categories.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, index){
                              return Container(
                               padding: EdgeInsets.symmetric(horizontal: 8),
-                              width: screenWidth <= 450 ? screenWidth / 1.8: screenWidth /2,
+                              width: screenWidth <= 450 ? screenWidth / 1.5: screenWidth /2,
                                child: Card(
                                 color: Theme.of(context).cardColor,
                                 child: Row(
@@ -386,25 +386,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "${categories[index].detail} questions",
                                           style: Theme.of(context).textTheme.labelSmall,
                                         ), 
-                                        const SizedBox(height: 7),
-                                        InkWell(
-                                          onTap: (){},
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 8),
-                                            // margin: const EdgeInsets.only(bottom: 12),
-                                            decoration: BoxDecoration(
-                                               color: categories[index].color2,
-                                              borderRadius: BorderRadius.circular(18),
-                                             ),
-                                             child: Text(
-                                              'Play', 
-                                              style: TextStyle(
-                                                color: categories[index].color1,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700
+                                        const SizedBox(height: 22, width: 10,),
+                                        Center(
+                                          child: InkWell(
+                                            onTap: (){},
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 8),
+                                              // margin: const EdgeInsets.only(bottom: 12),
+                                              decoration: BoxDecoration(
+                                                 color: categories[index].color2,
+                                                borderRadius: BorderRadius.circular(18),
+                                               ),
+                                               child: Text(
+                                                'Play', 
+                                                style: TextStyle(
+                                                  color: categories[index].color1,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700
+                                                ),
+                                                ),
                                               ),
-                                              ),
-                                            ),
+                                          ),
                                         )
                                       ],
                                     )
@@ -489,6 +491,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Enter the money'),
+                                    // Icon(Icons.leaderboard_rounded),
                                     const SizedBox(height: 8,),
                                     Container(
                                       padding: EdgeInsets.symmetric(horizontal: 12),
