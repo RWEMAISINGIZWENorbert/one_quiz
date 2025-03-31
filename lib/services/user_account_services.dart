@@ -15,6 +15,7 @@ class UserAccountService {
     final prefs = await SharedPreferences.getInstance();
     final currentBalance = await getBalance();
     await prefs.setDouble(_balanceKey, currentBalance + amount);
+    await getBalance();
   }
 
   Future<void> deductMoney(double amount) async {
@@ -24,6 +25,7 @@ class UserAccountService {
     final currentBalance = await getBalance();
     if (currentBalance >= amount) {
       await prefs.setDouble(_balanceKey, currentBalance - amount);
+      await getBalance();
     }
   }
 }
