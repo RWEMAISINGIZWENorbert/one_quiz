@@ -381,11 +381,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                           categories[index].name,
                                           style: Theme.of(context).textTheme.displaySmall,
                                           ),
-                                        const SizedBox(height: 18,),
+                                        const SizedBox(height: 8,),
                                         Text(
                                           "${categories[index].detail} questions",
                                           style: Theme.of(context).textTheme.labelSmall,
                                         ), 
+                                        const SizedBox(height: 7),
+                                        InkWell(
+                                          onTap: (){},
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 8),
+                                            // margin: const EdgeInsets.only(bottom: 12),
+                                            decoration: BoxDecoration(
+                                               color: categories[index].color2,
+                                              borderRadius: BorderRadius.circular(18),
+                                             ),
+                                             child: Text(
+                                              'Play', 
+                                              style: TextStyle(
+                                                color: categories[index].color1,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700
+                                              ),
+                                              ),
+                                            ),
+                                        )
                                       ],
                                     )
                                   ],
