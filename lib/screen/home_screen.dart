@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:one_quiz/components/bottom_nav.dart';
 import 'package:one_quiz/components/input_cash.dart';
 import 'package:one_quiz/model/category_model.dart';
 import 'package:one_quiz/screen/app.dart';
@@ -426,6 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     ),
+    bottomNavigationBar: BottomNav(),
    );
   }
 
