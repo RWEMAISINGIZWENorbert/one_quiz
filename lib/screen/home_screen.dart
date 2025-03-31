@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:one_quiz/components/input_cash.dart';
+import 'package:one_quiz/model/category_model.dart';
 import 'package:one_quiz/screen/app.dart';
 import 'package:one_quiz/services/user_account_services.dart';
 
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final UserAccountService _accountService = UserAccountService();
   // double totalBalance = 2000;
   double totalBalance = 0;
+  List<CategoryModel> categories = CategoryModel.initCategoryModel();
 
   @override
   void initState(){
@@ -156,13 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //   ),
     // );
     
-     try {
-       rootBundle.load('assets/rwanda.png');
-        print('The file exits');
-     } catch (e) {
-       print('File doesnt exits');
-       rethrow;
-     }
 
    return Scaffold(
     body: SingleChildScrollView(
@@ -190,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                        const SizedBox(width: 12),
                       Text(
-                        'One Quiz',
+                        'QuizMaster',
                         style: Theme.of(context).textTheme.displayMedium
                         !.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                         ),
@@ -345,7 +340,64 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ), 
                 ),
-                const SizedBox(height: 12),  
+                const SizedBox(height: 12),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Categories',
+                        style: Theme.of(context).textTheme.displaySmall
+                        !.copyWith(fontSize: 19, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 12,),
+                        Container(
+                          height: screenHeight / 5.5,
+                          child: ListView.builder(
+                            itemCount: categories.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, index){
+                             return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              width: screenWidth <= 450 ? screenWidth / 1.8: screenWidth /2,
+                               child: Card(
+                                color: Theme.of(context).cardColor,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 12),
+                                      child: Text(categories[index].ill, 
+                                      style: Theme.of(context).textTheme.labelMedium
+                                           !.copyWith(fontSize: 18)
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 18,),
+                                        Text(
+                                          categories[index].name,
+                                          style: Theme.of(context).textTheme.displaySmall,
+                                          ),
+                                        const SizedBox(height: 18,),
+                                        Text(
+                                          "${categories[index].detail} questions",
+                                          style: Theme.of(context).textTheme.labelSmall,
+                                        ), 
+                                      ],
+                                    )
+                                  ],
+                                 ),
+                               ),
+                             );
+                            },
+                            ),
+                        )
+                    ],
+                  ),
+                )  
               ],
             )
           ],
