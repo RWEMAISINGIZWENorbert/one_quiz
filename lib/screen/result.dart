@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:one_quiz/model/quiz_model.dart';
+import 'package:one_quiz/services/user_account_services.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyResult extends StatelessWidget {
@@ -22,13 +23,29 @@ class MyResult extends StatelessWidget {
     required this.totalBalance
     });
 
-
   @override
   Widget build(BuildContext context) {
     
         final bool success = score >= totalQuestions / score;
+        //  UserAccountService _accountService = UserAccountService();
+  //  Future<void> _loadBalance() async{
+  //   final balance = await _accountService.getBalance();
+  //    to
+  // }
 
-    final double screenWidth = MediaQuery.of(context).size.width;
+
+  final double screenWidth = MediaQuery.of(context).size.width;
+    
+    return Builder(
+      builder: (context) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (score > 1) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('You win. Your new Total Balance $totalBalance'),
+              ),
+            );  }
+        });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -68,6 +85,8 @@ class MyResult extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ); 
   }
+  );
+}
 }
