@@ -1,6 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:one_quiz/components/input_cash.dart';
 import 'package:one_quiz/screen/app.dart';
 import 'package:one_quiz/services/user_account_services.dart';
@@ -154,7 +155,15 @@ class _HomeScreenState extends State<HomeScreen> {
     //     ),
     //   ),
     // );
- 
+    
+     try {
+       rootBundle.load('assets/rwanda.png');
+        print('The file exits');
+     } catch (e) {
+       print('File doesnt exits');
+       rethrow;
+     }
+
    return Scaffold(
     body: SingleChildScrollView(
       child: Container(
@@ -162,20 +171,159 @@ class _HomeScreenState extends State<HomeScreen> {
         width: screenWidth <= 450 ? screenWidth: screenWidth / 2,
         child: Column(
           children: [
-            const SizedBox(height: 52),
+            const SizedBox(height: 10),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+              margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    child: Image.asset(
-                      './assets/profile.png',
-                       fit: BoxFit.cover,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        child: ClipOval(
+                          child: Image.network(
+                            'assets/profile.png',
+                             fit: BoxFit.fill,
+                            ),
+                        ),
                       ),
-                  )
+                       const SizedBox(width: 12),
+                      Text(
+                        'One Quiz',
+                        style: Theme.of(context).textTheme.displayMedium
+                        !.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: (){
+                    },
+                    icon:Icon(Icons.menu)
+                    )
                 ],
               ),
+            ),
+            const SizedBox(height: 42,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    'Account', 
+                    style: Theme.of(context).textTheme.displaySmall
+                    !.copyWith(fontSize: 19, fontWeight: FontWeight.w600),
+                    ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(vertical: 22, horizontal: 12),
+                  height: screenHeight / 4,
+                  width: screenWidth <= 450 ? screenWidth : screenWidth / 4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomRight,
+                      // tileMode: TileMode.clamp,
+                      colors: ThemeMode.light == true 
+                      ? 
+                      <Color>[
+                       const Color.fromARGB(255, 5, 19, 6).withOpacity(0.7),
+                       const Color.fromARGB(255, 5, 19, 6).withOpacity(0.9),
+                       const Color.fromARGB(255, 5, 19, 6).withOpacity(0.8),
+                      ]
+                      : <Color> [
+                        const Color.fromARGB(255, 12, 46, 24).withOpacity(0.7),
+                        const Color.fromARGB(255, 12, 46, 24).withOpacity(0.9),
+                        const Color.fromARGB(255, 12, 46, 24).withOpacity(0.8),
+                      ]
+                      )
+                  ), 
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 42,
+                            // width: 100,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Theme.of(context).cardColor,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      child: ClipOval(
+                                        child: Image.network('assets/rwanda.png'),
+                                        ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Text('Rwanda')
+                              ],
+                              ),
+                          ),
+                          // Container(
+                          //   // color: Colors.redAccent,
+                          //   height: 52,
+                          //   width: 62,
+                          //   child: Image.network(
+                          //     'assets/mtn.png', 
+                          //     width: 120,
+                          //     height: 150,
+                          //     )
+                          //   ),
+                          Text(
+                            "Mtn", 
+                            style: Theme.of(context).textTheme.displaySmall
+                            !.copyWith(color: Colors.white, fontSize: 20,),
+                            )
+                        ],
+                      ),
+                      const SizedBox(height: 12,),
+                      Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '120000\t',
+                                style: Theme.of(context).textTheme.displayMedium
+                                !.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white
+                                  ), 
+                              ),
+                              TextSpan(
+                                text: 'frw',
+                                style: Theme.of(context).textTheme.displaySmall
+                                !.copyWith(color: Colors.white, fontSize: 20,),
+                              )
+                            ]
+                          )
+                          ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          
+                        ],
+                      )
+                    ],
+                  ), 
+                ),  
+              ],
             )
           ],
         ),
