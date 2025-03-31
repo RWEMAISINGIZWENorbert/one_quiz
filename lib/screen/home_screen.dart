@@ -280,16 +280,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                               ),
                           ),
-                          // Container(
-                          //   // color: Colors.redAccent,
-                          //   height: 52,
-                          //   width: 62,
-                          //   child: Image.network(
-                          //     'assets/mtn.png', 
-                          //     width: 120,
-                          //     height: 150,
-                          //     )
-                          //   ),
                           Text(
                             "Mtn", 
                             style: Theme.of(context).textTheme.displaySmall
@@ -303,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '120000\t',
+                                text: '$totalBalance\t',
                                 style: Theme.of(context).textTheme.displayMedium
                                 !.copyWith(
                                   fontWeight: FontWeight.w800,
@@ -323,28 +313,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(18),
+                          InkWell(
+                            onTap: (){
+                              deposit_money_model(context, depositMoneyController);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Text('deposit'),
                             ),
-                            child: Text('deposit'),
                           ),
                           const SizedBox(width: 20,),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(18),
+                          InkWell(
+                            onTap: (){
+                              withdraw_money_model(context, withdrawMoneyController);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Text('withdraw'),
                             ),
-                            child: Text('withdraw'),
                           ),
                         ],
                       )
                     ],
                   ), 
-                ),  
+                ),
+                const SizedBox(height: 12),  
               ],
             )
           ],
