@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
+  // scaffoldBackgroundColor: const Color.fromARGB(255, 5, 19, 6).withOpacity(0.8),
+  // scaffoldBackgroundColor: const Color.fromARGB(255, 5, 19, 6).withOpacity(1),
   cardColor: Colors.grey[300],
   focusColor: Colors.grey[500],
   hintColor: Colors.black12,
