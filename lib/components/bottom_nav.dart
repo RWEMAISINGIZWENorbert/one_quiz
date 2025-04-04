@@ -1,33 +1,56 @@
 import 'package:flutter/material.dart';
 
-class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
+
+  
+
+
+
+// class BottomNav extends StatelessWidget {
+//   const BottomNav({super.key});
+ 
+class BottomNav extends StatefulWidget{
+   const BottomNav({super.key});
 
   @override
+  State<BottomNav> createState() => _BottomNavState();
+}
+
+class _BottomNavState extends State<BottomNav> {
+      int currentIndex = 0;
+    int selectedIndex = 0;
+
+   @override
+   void initState(){
+     currentIndex;
+     selectedIndex;
+     super.initState();
+   }
+
+ @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 0.1,
-              offset: Offset(0, 3)
-            )
-          ]
-        ),
-        child: ClipOval(
-          child: BottomNavigationBar(
-            items: [
-              const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              const BottomNavigationBarItem(icon: Icon(Icons.quiz_rounded), label: 'Play Quiz'),
-              const BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: 'ledaerBoard'),
-              const BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle_sharp), label: 'profile'),
-            ]
-            ),
-        ),
+    return Container(
+     margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+    child: ClipRRect(
+    borderRadius: BorderRadius.circular(50),
+    child: BottomNavigationBar(
+      currentIndex: selectedIndex,
+      selectedItemColor: Colors.green,
+      showUnselectedLabels: true,
+      unselectedItemColor: Theme.of(context).hintColor,
+      items: const <BottomNavigationBarItem> [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home', ),
+        BottomNavigationBarItem(icon: Icon(Icons.quiz_rounded), label: 'Quiz'),
+        BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: 'ledaerBoard'),
+        BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle_sharp), label: 'profile'),
+      ],
+      onTap: (selectedIndex){
+          setState(() {
+            currentIndex = selectedIndex;
+          });
+         print(currentIndex);
+      },
       ),
+  ),
     );
   }
 }
