@@ -14,13 +14,19 @@ class QuizCategory extends StatelessWidget {
      double screenWidth =  MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Choose category'),
+        leading: Icon(Icons.arrow_back_ios_new_rounded),
+        backgroundColor: Colors.transparent,
+      ),
       body: Center(
-        child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          height: screenWidth,
           child: ListView.builder(
             itemCount: categories.length,
             itemBuilder: (BuildContext context, index){
                 return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
                   width: screenWidth <= 450 ? screenWidth : screenWidth / 1.5,
                   child:Card(
                       color: Theme.of(context).cardColor,
@@ -35,6 +41,7 @@ class QuizCategory extends StatelessWidget {
                                            !.copyWith(fontSize: 18)
                                       ),
                                     ),
+                                    
                               Column(
                                 children: [
                                  const SizedBox(height: 18,),
