@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-  
-
-
-
 // class BottomNav extends StatelessWidget {
 //   const BottomNav({super.key});
  
@@ -33,7 +28,7 @@ class _BottomNavState extends State<BottomNav> {
     child: ClipRRect(
     borderRadius: BorderRadius.circular(50),
     child: BottomNavigationBar(
-      currentIndex: selectedIndex,
+      currentIndex: currentIndex,
       selectedItemColor: Colors.green,
       showUnselectedLabels: true,
       unselectedItemColor: Theme.of(context).hintColor,
