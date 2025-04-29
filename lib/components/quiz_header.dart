@@ -58,7 +58,7 @@ class QuizHeader extends StatelessWidget {
                       color: timeRemaining < 5 ? (Colors.red ) :const Color(0xFF5EE61F),
                     ),
                     child: Text(
-                      '00:0$timeRemaining',
+                      '00:$timeRemaining',
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(color: Colors.white),
                     ),
                   )

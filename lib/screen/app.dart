@@ -29,7 +29,7 @@ class _AppState extends State<App> {
    Map<String, String> correctAnswers = {};
    List<QuizModel> quizData = QuizModel.initQuiz();
    Timer? _questionTimer;
-  int _timeRemaining = 1; // 3 seconds per question
+  int _timeRemaining = 60; // 3 seconds per question
   bool _timeExpired = false;
   
   // Object? get selectedMoney => selectedMoney;
@@ -38,7 +38,7 @@ class _AppState extends State<App> {
 
   Future<void> _loadBalance() async{
     final balance = await _accountService.getBalance();
-    // setState(() {
+    // setState(() { 
       totalBalance = balance;
     // });
   }
@@ -57,7 +57,7 @@ class _AppState extends State<App> {
 
      void _startTimer() {
     _timeExpired = false;
-    _timeRemaining = 9;
+    _timeRemaining = 60;
     _questionTimer?.cancel(); // Cancel any existing timer
     
     _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -129,7 +129,7 @@ class _AppState extends State<App> {
       await prefs.setString('answer_${entry.key}', entry.value);
     }
 
-    if(score > 1){
+    if(score > 1 ){
       // totalBalance += (score * 2);
       await _accountService.addMoney(score* 2);
       await _loadBalance();
@@ -156,122 +156,127 @@ class _AppState extends State<App> {
     // print(selectedMoney);
 
     return  Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 44,),
-          Row(
-            children: [
-              IconButton(
-                 onPressed: (){
-                  Navigator.pop(context);
-                 },
-                 icon: Icon(Icons.arrow_back_ios)
-                ),
-              const SizedBox(width: 72),
-              Center(
-                child: Text(
-                  'Math quiz', 
-                  style: Theme.of(context).textTheme.titleMedium
-                  ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 40),
-          QuizHeader(
-            currentIndex: currentIndex,
-            actualIndex: actualIndex,
-            timeRemaining: _timeRemaining
-            ),
-          const SizedBox(height: 50),
-          Column(
-            children: [
-              Center(
-                child: Text(
-                  quizData[currentIndex].questionName,
-                  style: Theme.of(context).textTheme.labelLarge,
-                  ),
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Choose the best answer',
-                style: Theme.of(context).textTheme.labelSmall,
+              const SizedBox(height: 44,),
+              Row(
+                children: [
+                  IconButton(
+                     onPressed: (){
+                      Navigator.pop(context);
+                     },
+                     icon: Icon(Icons.arrow_back_ios)
+                    ),
+                  const SizedBox(width: 72),
+                  Center(
+                    child: Text(
+                      'Math quiz', 
+                      style: Theme.of(context).textTheme.titleMedium
+                      ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              QuizHeader(
+                currentIndex: currentIndex,
+                actualIndex: actualIndex,
+                timeRemaining: _timeRemaining
                 ),
-              const SizedBox(height: 15),
-              AnswerOptions(
-                // currentIndex: currentIndex,
-                // selectedAnswer: selectedAnswer,
-                // questionId: '','
-                currentQuestion: currentQuestion,
-                selectedAnswer: selectedAnswers[currentQuestion.id] ?? '',
-                onAnswerSelected: _handleAnswerSelected,
+              const SizedBox(height: 50),
+              Column(
+                children: [
+                  Center(
+                    child: Text(
+                      quizData[currentIndex].questionName,
+                      style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Choose the best answer',
+                    style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                  const SizedBox(height: 15),
+                  AnswerOptions(
+                    // currentIndex: currentIndex,
+                    // selectedAnswer: selectedAnswer,
+                    // questionId: '','
+                    currentQuestion: currentQuestion,
+                    selectedAnswer: selectedAnswers[currentQuestion.id] ?? '',
+                    onAnswerSelected: _handleAnswerSelected,
+                    ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40
                 ),
+                child: ElevatedButton(
+                  // onPressed: () async {
+                  // // int lastIndex = quizData.length - 1; 
+                  //  setState(() {
+                  //     if(currentIndex < lastIndex){
+                  //       currentIndex += 1;
+                  //       actualIndex += 1;
+                  //     }
+                  //   questionId = questionId;  
+                  // });
+                  //   if(currentIndex == lastIndex){
+                  //       Navigator.push(
+                  //         context, 
+                  //         MaterialPageRoute(builder: (context) => MyResult()
+                  //         )
+                  //         );
+                  //     }
+                  //     final SharedPreferences prfs = await SharedPreferences.getInstance(); 
+                  //     await prfs.setString('question id $questionId', selectedAnswer).whenComplete(() => print('question $questionId and $selectedAnswer added successfully')); 
+                  // }, 
+                    onPressed: () async {
+                    if (selectedAnswers[currentQuestion.id] == null && currentIndex != lastIndex) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please select an answer'), ),
+                      );
+                      return;
+                    }
+                    // if (currentIndex < lastIndex) {
+                    //   setState(() {
+                    //     currentIndex += 1;
+                    //     actualIndex += 1;
+                    //   });
+                    // } else {
+                    //   await _submitQuiz();
+                    // }
+                    _goToNextQuestion();
+                  }, 
+                  style: ButtonStyle(
+                    backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text( 
+                      currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white
+                    ),
+                    ),
+                    )
+                  ),
+              ),
+                const Spacer()   
             ],
           ),
-          const SizedBox(height: 5),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 40
-            ),
-            child: ElevatedButton(
-              // onPressed: () async {
-              // // int lastIndex = quizData.length - 1; 
-              //  setState(() {
-              //     if(currentIndex < lastIndex){
-              //       currentIndex += 1;
-              //       actualIndex += 1;
-              //     }
-              //   questionId = questionId;  
-              // });
-              //   if(currentIndex == lastIndex){
-              //       Navigator.push(
-              //         context, 
-              //         MaterialPageRoute(builder: (context) => MyResult()
-              //         )
-              //         );
-              //     }
-              //     final SharedPreferences prfs = await SharedPreferences.getInstance(); 
-              //     await prfs.setString('question id $questionId', selectedAnswer).whenComplete(() => print('question $questionId and $selectedAnswer added successfully')); 
-              // }, 
-                onPressed: () async {
-                if (selectedAnswers[currentQuestion.id] == null && currentIndex != lastIndex) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please select an answer'), ),
-                  );
-                  return;
-                }
-                // if (currentIndex < lastIndex) {
-                //   setState(() {
-                //     currentIndex += 1;
-                //     actualIndex += 1;
-                //   });
-                // } else {
-                //   await _submitQuiz();
-                // }
-                _goToNextQuestion();
-              }, 
-              style: ButtonStyle(
-                backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text( 
-                  currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white
-                ),
-                ),
-                )
-              ),
-          ),
-            const Spacer()   
-        ],
+        ),
       ),
     );
   }
