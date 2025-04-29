@@ -108,6 +108,7 @@ class _QuizOptionsUiState extends State<QuizOptionsUi> {
                                    print("On control");
                                    await _accountService.deductMoney(bettedMoney);
                                    await _loadBalance();
+                                   await _accountService.betMoney(bettedMoney);
                                   Navigator.pop(context);
                                   Navigator.push(
                                     context, 
@@ -121,7 +122,7 @@ class _QuizOptionsUiState extends State<QuizOptionsUi> {
                         )
                         );
                     }
-                    );
+    );
   }
 
 }

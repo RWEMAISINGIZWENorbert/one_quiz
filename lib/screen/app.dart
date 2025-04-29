@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,7 +58,7 @@ class _AppState extends State<App> {
 
      void _startTimer() {
     _timeExpired = false;
-    _timeRemaining = 60;
+    _timeRemaining = 10;
     _questionTimer?.cancel(); // Cancel any existing timer
     
     _questionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -129,11 +130,17 @@ class _AppState extends State<App> {
       await prefs.setString('answer_${entry.key}', entry.value);
     }
 
-    if(score > 1 ){
+       final bettedMoney = await _accountService.viewBetted();
+        double gainedMoney = 0; // Initialize with a default value
+    if(score > 5 ){
       // totalBalance += (score * 2);
-      await _accountService.addMoney(score* 2);
+      await _accountService.addMoney(score * 2);
       await _loadBalance();
-    }  
+      gainedMoney = (score * (bettedMoney / quizData.length)); 
+    }
+    print("The bettedMoney there $bettedMoney");
+
+    final double newBalance = totalBalance + gainedMoney;
 
      Navigator.push(context,
       MaterialPageRoute(
@@ -143,7 +150,7 @@ class _AppState extends State<App> {
           selectedAnswers: selectedAnswers,
           correctAnswers: correctAnswers,
           questions: quizData,
-          totalBalance: totalBalance
+          totalBalance: newBalance
         ),
       ),
     );
@@ -155,10 +162,10 @@ class _AppState extends State<App> {
     final currentQuestion = quizData[currentIndex];
     // print(selectedMoney);
 
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height / 1.5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -207,9 +214,6 @@ class _AppState extends State<App> {
                     ),
                   const SizedBox(height: 15),
                   AnswerOptions(
-                    // currentIndex: currentIndex,
-                    // selectedAnswer: selectedAnswer,
-                    // questionId: '','
                     currentQuestion: currentQuestion,
                     selectedAnswer: selectedAnswers[currentQuestion.id] ?? '',
                     onAnswerSelected: _handleAnswerSelected,
@@ -217,68 +221,40 @@ class _AppState extends State<App> {
                 ],
               ),
               const SizedBox(height: 5),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 40
-                ),
-                child: ElevatedButton(
-                  // onPressed: () async {
-                  // // int lastIndex = quizData.length - 1; 
-                  //  setState(() {
-                  //     if(currentIndex < lastIndex){
-                  //       currentIndex += 1;
-                  //       actualIndex += 1;
-                  //     }
-                  //   questionId = questionId;  
-                  // });
-                  //   if(currentIndex == lastIndex){
-                  //       Navigator.push(
-                  //         context, 
-                  //         MaterialPageRoute(builder: (context) => MyResult()
-                  //         )
-                  //         );
-                  //     }
-                  //     final SharedPreferences prfs = await SharedPreferences.getInstance(); 
-                  //     await prfs.setString('question id $questionId', selectedAnswer).whenComplete(() => print('question $questionId and $selectedAnswer added successfully')); 
-                  // }, 
-                    onPressed: () async {
-                    if (selectedAnswers[currentQuestion.id] == null && currentIndex != lastIndex) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please select an answer'), ),
-                      );
-                      return;
-                    }
-                    // if (currentIndex < lastIndex) {
-                    //   setState(() {
-                    //     currentIndex += 1;
-                    //     actualIndex += 1;
-                    //   });
-                    // } else {
-                    //   await _submitQuiz();
-                    // }
-                    _goToNextQuestion();
-                  }, 
-                  style: ButtonStyle(
-                    backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text( 
-                      currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white
-                    ),
-                    ),
-                    )
-                  ),
-              ),
-                const Spacer()   
+              // Container(
+              //   margin: EdgeInsets.symmetric(
+              //     horizontal: 40
+              //   ),
+              //   child: ElevatedButton(
+              //       onPressed: () async {
+              //       if (selectedAnswers[currentQuestion.id] == null && currentIndex != lastIndex) {
+              //         ScaffoldMessenger.of(context).showSnackBar(
+              //           const SnackBar(content: Text('Please select an answer'), ),
+              //         );
+              //         return;
+              //       }
+              //       _goToNextQuestion();
+              //     }, 
+              //     style: ButtonStyle(
+              //       backgroundColor:  WidgetStateProperty.all(Color.fromARGB(255, 57, 124, 26))
+              //     ),
+              //     child: Container(
+              //       alignment: Alignment.center,
+              //       child: Text( 
+              //         currentIndex != lastIndex ? 'Next': 'Submit', style: GoogleFonts.poppins(
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.w400,
+              //         color: Colors.white
+              //       ),
+              //       ),
+              //       )
+              //     ),
+              // ),
+              const Spacer()
             ],
           ),
         ),
       ),
     );
   }
-
 }

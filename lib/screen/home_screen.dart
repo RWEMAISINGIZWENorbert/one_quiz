@@ -305,30 +305,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                             ),
                         ),
-                        const SizedBox(height: 18),
+                        // const SizedBox(height: 18),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            InkWell(
+                            GestureDetector(
                               onTap: (){
                                 deposit_money_model(context, depositMoneyController);
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),  
                                 decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(18),
                                 ),
-                                child: Text('deposit'),
+                                child: const Text('deposit'),
                               ),
                             ),
-                            const SizedBox(width: 20,),
-                            InkWell(
+                            const SizedBox(width: 12,),
+                            GestureDetector(
                               onTap: (){
                                 withdraw_money_model(context, withdrawMoneyController);
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
                                 decoration: BoxDecoration(
                                   color: Colors.red,
                                   borderRadius: BorderRadius.circular(18),
@@ -337,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ), 
                   ),

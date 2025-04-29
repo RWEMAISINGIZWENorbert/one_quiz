@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:one_quiz/model/quiz_model.dart';
+import 'package:one_quiz/services/user_account_services.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyResult extends StatelessWidget {
@@ -26,7 +27,9 @@ class MyResult extends StatelessWidget {
   Widget build(BuildContext context) {
     
         final bool success = score >= totalQuestions / score;
-        //  UserAccountService _accountService = UserAccountService();
+        final _accountService = UserAccountService();
+        
+
   //  Future<void> _loadBalance() async{
   //   final balance = await _accountService.getBalance();
   //    to
@@ -37,6 +40,8 @@ class MyResult extends StatelessWidget {
     
     return Builder(
       builder: (context) {
+         final bettedMoney =  _accountService.viewBetted();
+         print("The Betted Money $bettedMoney");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (score > 1) {
             ScaffoldMessenger.of(context).showSnackBar(
