@@ -7,6 +7,7 @@ import 'package:one_quiz/components/input_cash.dart';
 import 'package:one_quiz/model/category_model.dart';
 import 'package:one_quiz/screen/app.dart';
 import 'package:one_quiz/services/user_account_services.dart';
+import 'package:one_quiz/utils/add_product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -325,7 +326,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(width: 12,),
                             GestureDetector(
                               onTap: (){
-                                withdraw_money_model(context, withdrawMoneyController);
+                                // withdraw_money_model(context, withdrawMoneyController);
+                                add_product(context);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
